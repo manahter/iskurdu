@@ -1,3 +1,4 @@
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {TouchableOpacity} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import React, {useState} from 'react';
@@ -8,13 +9,15 @@ const data = navigation => [
   {
     icon: 'logout',
     text: 'Çıkış Yap',
-    onPress: () =>
+    onPress: () => {
       auth()
         .signOut()
         .then(() => {
           console.log('User signed out!');
           navigation.navigate('Auth');
-        }),
+        });
+      GoogleSignin.signOut();
+    },
   },
 ];
 

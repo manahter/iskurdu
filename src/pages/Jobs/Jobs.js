@@ -1,6 +1,6 @@
-import {FlatList, ActivityIndicator, View} from 'react-native';
+import {BackHandler, FlatList, ActivityIndicator, View} from 'react-native';
+import {useTheme, useFocusEffect} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {useTheme} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 
 import NotFound from '../../components/lotties/NotFound';
@@ -27,6 +27,23 @@ const Jobs = ({navigation}) => {
       dispatch({type: 'utils/setWorksPageReload', payload: false});
     }
   }, [reload]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        // Bu sayfa için geri gitme işlemini engelliyoruz.
+        return true;
+      };
+
+      // Geri düğmesine basıldığında "onBackPress" işlevini çağırır
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => {
+        // Temizleme
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
+    }, []),
+  );
 
   const handleOnSelect = work => {
     console.log('Page -> Jobs -> goPage -> Details');

@@ -69,7 +69,9 @@ function Router() {
         <Stack.Screen
           name="Jobs"
           component={Jobs}
+          backBehavior=""
           options={{
+            headerLeft: null,
             title: 'İş İlanları',
             headerShown: false,
           }}
